@@ -1,6 +1,6 @@
 Create a ubuntu machine 
 sudo su
-wget 
+wget https://github.com/alekhya167/Deployment-script/blob/main/jenkins.sh
 ls
 chmod 777 jenkins.sh
 ls
