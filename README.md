@@ -13,4 +13,4 @@ service jenkins restart
  service jenkins restart
 
 
- Go to jenkins -> create pipeline and select https://github.com/alekhya167/star-agile-banking-finance/ as source code project
+ Go to jenkins -> create pipeline and select https://github.com/alekhya167/banking-financeme-project/ as source code project
