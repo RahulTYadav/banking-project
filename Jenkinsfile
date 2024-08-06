@@ -18,12 +18,12 @@ pipeline{
                 sh 'mvn test'
             }
         }
-        stage('qa with akshat'){
+        stage('qa with alekhya'){
             steps{
                 sh 'mvn checkstyle:checkstyle'
             }
         }
-        stage('package with akshat'){
+        stage('package with alekhya'){
             steps{
                 sh 'mvn package'
             }
