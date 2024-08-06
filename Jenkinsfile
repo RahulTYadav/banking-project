@@ -1,37 +1,45 @@
-pipeline {
+pipeline{
     agent any
     stages{
-        stage('Build Maven'){
+        stage('checkout the code from github'){
             steps{
-                git url:'https://github.com/alekhya167/banking-financeme-project/', branch: "master"
-               sh 'mvn clean install'
+                 git url: 'https://github.com/alekhya167/banking-financeme-project/'
+                 echo 'github url checkout'
             }
         }
-        stage('Build docker image'){
+        stage('codecompile with alekhya'){
             steps{
-                script{
-                    sh 'docker build -t alekhya1607/bankingproject:v1 .'
-                }
+                echo 'starting compiling'
+                sh 'mvn compile'
             }
         }
-          stage('Docker login') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push alekhya1607/bankingproject:v1'
-                }
+        stage('codetesting with alekhya'){
+            steps{
+                sh 'mvn test'
             }
         }
-        
-        
-        stage('Deploy to k8s'){
-            when{ expression {env.GIT_BRANCH == 'master'}}
+        stage('qa with akshat'){
             steps{
-                script{
-                     kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
-                   
-                }
+                sh 'mvn checkstyle:checkstyle'
             }
+        }
+        stage('package with akshat'){
+            steps{
+                sh 'mvn package'
+            }
+        }
+        stage('run dockerfile'){
+          steps{
+               sh 'docker build -t alekhya1607/bankingprojectv1 .'
+           }
+         }
+        stage('Login to dockerhub and push the file'){
+            steps{
+                with Credentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
+                    sh 'docker login -u alekhya1607 -p ${dockerhubpass}'
+                    sh ' docker push alekhya1607/bankingprojectv1 '
+                }
+            }   
         }
     }
 }
