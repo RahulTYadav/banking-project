@@ -1,42 +1,37 @@
-pipeline{
+pipeline {
     agent any
     stages{
-        stage('checkout the code from github'){
+        stage('Build Maven'){
             steps{
-                 git url: 'https://github.com/alekhya167/banking-financeme-project/'
-                 echo 'github url checkout'
+                git url:'https://github.com/alekhya167/banking-financeme-project/', branch: "master"
+               sh 'mvn clean install'
             }
         }
-        stage('codecompile with alekhya'){
+        stage('Build docker image'){
             steps{
-                echo 'starting compiling'
-                sh 'mvn compile'
+                script{
+                    sh 'docker build -t alekhya1607/bankingproject:v1 .'
+                }
             }
         }
-        stage('codetesting with alekhya'){
-            steps{
-                sh 'mvn test'
+          stage('Docker login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push alekhya1607/bankingproject:v1'
+                }
             }
         }
-        stage('qa with alekhya'){
+        
+        
+        stage('Deploy to k8s'){
+            when{ expression {env.GIT_BRANCH == 'master'}}
             steps{
-                sh 'mvn checkstyle:checkstyle'
+                script{
+                     kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
+                   
+                }
             }
         }
-        stage('package with alekhya'){
-            steps{
-                sh 'mvn package'
-            }
-        }
-        stage('run dockerfile'){
-          steps{
-               sh 'docker build -t myimg .'
-           }
-         }
-        stage('port expose'){
-            steps{
-                sh 'docker run -dt -p 8081:8081 --name c000 myimg'
-            }
-        }   
     }
 }
