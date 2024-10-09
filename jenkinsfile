@@ -1,0 +1,61 @@
+pipeline{
+ agent any
+ stages{
+ stage('checkout the code from github'){
+ steps{
+ git url: 
+'https://github.com/RahulTYadav/banking-project.git'
+ echo 'github url checkout'
+ }
+ }
+ stage('codecompile with rahul'){
+ steps{
+ echo 'starting rahul'
+ sh 'mvn compile'
+ }
+ }
+ stage('codetesting with rahul'){
+ steps{
+ sh 'mvn test'
+ }
+ }
+ stage('qa with rahul'){
+ steps{
+ sh 'mvn checkstyle:checkstyle'
+ }
+ }
+ stage('package with rahul'){
+ steps{
+ sh 'mvn package'
+ }
+ }
+ stage('run dockerfile'){
+ steps{
+ sh 'docker build -t 
+rahultyadav/bankingprojectv1 .'
+ }
+ }
+ stage('Login to dockerhub and push the file'){
+ steps{
+ withCredentials([string(credentialsId: 
+'dockerhubpassword', variable: 'dockerhubpass')]) 
+{
+ sh 'docker login -u rahultyadav -p 
+${dockerhubpass}'
+ sh 'docker push 
+alekhya1607/bankingprojectv1'
+ }
+ 
+ } 
+ }
+ stage('Deployment stage using ansible'){
+ steps{
+ ansiblePlaybook become: true, 
+becomeUser: null, credentialsId: 'ansible', 
+disableHostKeyChecking: true, installation: 
+'Ansible', inventory: '/etc/ansible/hosts', 
+playbook: 'ansible-playbook.yml', vaultTmpPath: ''
+ }
+ }
+ }
+}
