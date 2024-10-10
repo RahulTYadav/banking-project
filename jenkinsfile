@@ -38,6 +38,12 @@ pipeline{
                 withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
                     sh 'docker login -u rahultyadav -p ${Godisgreat@123}'
                     sh 'docker push rahultyadav/bankingproject'
+        stage('Deployment stage using ansible'){
+            steps{
+ ansiblePlaybook become: true, 
+becomeUser: null, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml', vaultTmpPath: ''
+                          }
+                      }
                   }
               }   
           }
