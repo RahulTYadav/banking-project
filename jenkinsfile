@@ -31,13 +31,7 @@ pipeline{
         stage('run dockerfile'){
           steps{
                sh 'docker build -t rahultyadav/bankingproject .'
-           }
-         }
-        stage('Login to dockerhub and push the file'){
-            steps{
-                withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
-                    sh 'docker login -u rahultyadav -p ${Godisgreat@123}'
-                    sh 'docker push rahultyadav/bankingproject'
+                     }
                   }
               }   
           }
