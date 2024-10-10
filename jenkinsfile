@@ -28,15 +28,21 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('run dockerfile'){
-          steps{
-               sh 'docker build -t rahultyadav/bankingproject .'
-           }
-         }
-        stage('port expose'){
-          steps{
-                sh 'docker run -dt -p 8091:8091 --name banking bankingproject'
-               }   
-          }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t bankingproject .'
+                }
+            }
+       stage('Run') {
+            steps {
+                script {
+                    // Run the Docker container with port exposure
+                    sh 'docker run -d -p 8091:8091 --name banking bankingproject'
+                }
+            }
+        }
      }
 }
