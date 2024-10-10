@@ -42,5 +42,6 @@ pipeline{
         sh 'docker push rahultyadav/bankingproject'
         stage('port expose'){
             }   
-    }
+      }
+   }
 }
