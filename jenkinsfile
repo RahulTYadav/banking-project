@@ -38,6 +38,16 @@ pipeline{
                 withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpass')]) {
                     sh 'docker login -u rahultyadav -p ${Godisgreat@123}'
                     sh 'docker push rahultyadav/bankingproject'
+        environment {
+                buildDir = "/var/lib/jenkins/workspace/Package_Deploy_Pipeline/"
+    }
+        stages {
+                stage('Upload') {
+                     steps {
+                             sh 'curl -v --user user:password --data-binary ${buildDir}package${env.BUILD_NUMBER}.tar -X PUT "http://artifactory.mydomain.com/artifactory/release-packages/package${env.BUILD_NUMBER}.tar"'
+                              }
+                         }
+                    }
                 }
             }   
         }
