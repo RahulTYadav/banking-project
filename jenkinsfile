@@ -28,15 +28,18 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('Build in process') {
-            steps {
-                    sh 'docker build -t bankingproject .'
+        stage('run dockerfile'){
+          steps{
+               sh 'docker build -t rahultyadav/bankingproject .'
+           }
+         }
+        stage('Login to dockerhub and push the file'){
+            steps{
+                with Credentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
+                    sh 'docker login -u rahultyadav -p ${Godisgreat@123}'
+                    sh ' docker push rahultyadav/bankingproject '
                 }
-            }
-        stage('Run') {
-            steps {
-                    sh 'docker run -d -p 8091:8091 --name banking bankingproject'
-            }
+            }   
         }
     }
 }
