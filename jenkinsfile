@@ -41,8 +41,7 @@ pipeline{
         sh 'docker login -u rahultyadav -p ${dockerhubpass}'
         sh 'docker push rahultyadav/bankingproject'
         stage('port expose')
-               }  
-          }   
-      }
-   }
+               }   
+          }
+     }
 }
