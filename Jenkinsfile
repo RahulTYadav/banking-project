@@ -3,43 +3,33 @@ pipeline{
     stages{
         stage('checkout the code from github'){
             steps{
-                 git url: 'https://github.com/alekhya167/banking-financeme-project/'
+                 git url: 'https://github.com/RahulTYadav/banking-project.git'
                  echo 'github url checkout'
             }
         }
-        stage('codecompile with alekhya'){
+        stage('codecompile with rahul'){
             steps{
                 echo 'starting compiling'
                 sh 'mvn compile'
             }
         }
-        stage('codetesting with alekhya'){
+        stage('codetesting with rahul'){
             steps{
                 sh 'mvn test'
             }
         }
-        stage('qa with alekhya'){
+        stage('qa with rahul'){
             steps{
                 sh 'mvn checkstyle:checkstyle'
             }
         }
-        stage('package with alekhya'){
+        stage('package with rahul'){
             steps{
                 sh 'mvn package'
             }
         }
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t alekhya1607/bankingprojectv1 .'
+               sh 'docker build -t rahultyadav/bankingproject .'
            }
-         }
-        stage('Login to dockerhub and push the file'){
-            steps{
-                with Credentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
-                    sh 'docker login -u alekhya1607 -p ${dockerhubpass}'
-                    sh ' docker push alekhya1607/bankingprojectv1 '
-                }
-            }   
-        }
     }
-}
