@@ -34,7 +34,7 @@ pipeline{
            }
          }
  steps{
-                sh 'docker run -dt -p 8091:8091 --name rj55 myimg'
+                sh 'docker run -dt -p 8091:8091 --name banking bankingproject'
                }   
           }
      }
