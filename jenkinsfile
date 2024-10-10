@@ -28,7 +28,7 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('Build') {
+        stage('Build in process') {
             steps {
                 script {
                     // Build the Docker image
