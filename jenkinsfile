@@ -36,8 +36,7 @@ pipeline{
         stage('Run') {
             steps {
                     sh 'docker run -d -p 8091:8091 --name banking bankingproject'
-                }
             }
-         }
-      }
-   }
+        }
+    }
+}
