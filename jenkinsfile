@@ -28,7 +28,6 @@ pipeline{
                 sh 'mvn package'
             }
         }
-    stages {
         stage('Build') {
             steps {
                 script {
@@ -47,4 +46,3 @@ pipeline{
          }
       }
    }
-}
