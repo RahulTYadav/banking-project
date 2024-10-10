@@ -30,17 +30,12 @@ pipeline{
         }
         stage('Build in process') {
             steps {
-                script {
-                    // Build the Docker image
                     sh 'docker build -t bankingproject .'
                 }
             }
-       stage('Run') {
+        stage('Run') {
             steps {
-                script {
-                    // Run the Docker container with port exposure
                     sh 'docker run -d -p 8091:8091 --name banking bankingproject'
-                    }
                 }
             }
          }
