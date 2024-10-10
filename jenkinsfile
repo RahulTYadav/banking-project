@@ -33,14 +33,8 @@ pipeline{
                sh 'docker build -t rahultyadav/bankingproject .'
            }
          }
-        stage('Login to dockerhub and push the file'){
-            steps{
-              withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpass')]) {
-    // some block
-}
  steps{
                 sh 'docker run -dt -p 8091:8091 --name rj55 myimg'
-                    }
                }   
           }
      }
