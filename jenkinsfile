@@ -24,7 +24,6 @@ pipeline {
     stage('Create a docker image from the Package banking-0.0.1-SNAPSHO0T.jar') {
       steps{
         sh 'docker build -t rahultyadav/bankingproject:1.0 .'
-    
                }
          }
     stage('Login to Dockerhub') {
@@ -40,8 +39,10 @@ pipeline {
                                               }
                           }
           }
-    stage('Ansible config and Deployment')
+    stage('Ansible config and Deployment') {
       steps {
         ansiblePlaybook credentialsId: 'Ansible-ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml', vaultTmpPath: ''
                   }
         }
+   }
+}
