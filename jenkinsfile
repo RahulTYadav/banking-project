@@ -23,7 +23,7 @@ pipeline {
      }
     stage('Create a docker image from the Package banking-0.0.1-SNAPSHO0T.jar') {
       steps{
-        sh 'docker -t rahultyadav/bankingproject:1.0 ."
+        sh 'docker -t rahultyadav/bankingproject:1.0 .'
                }
          }
     }
