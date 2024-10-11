@@ -6,7 +6,7 @@ pipeline {
    stages {
     stage('Git checkout') {
       steps {
-         echo 'This is for cloning the gitrepo'
+         echo 'cloning the gitrepo'
          git branch: 'master', url: 'https://github.com/RahulTYadav/banking-project.git'
                           }
             }
