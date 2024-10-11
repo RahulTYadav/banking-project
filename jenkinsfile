@@ -34,7 +34,7 @@ pipeline {
                                                }
                                      }
                         }
-    stage('Push the docker image") {
+    stage('Push the docker image') {
       steps { 
          sh 'docker push rahultyadav/bankingproject:1.0'
                                               }
