@@ -36,7 +36,6 @@ pipeline {
     stage('Push the docker image') {
       steps { 
          sh 'docker push rahultyadav/bankingproject:1.0'
-                                              }
                           }
           }
     stage('ansible config and Deployment') {
