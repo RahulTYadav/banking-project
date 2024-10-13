@@ -38,5 +38,6 @@ pipeline {
          sh 'docker push rahultyadav/bankingproject:1.0'
                           }
           }
+
      }
 }
