@@ -17,4 +17,4 @@
     become_user: root
 
   - name: Deploy the Image and Run as Container
-    command: docker run -itd -p 8084:8081 rahultyadav/bankingproject:1.0
+    command: docker run -itd -p 8084:8081 rahultyadav/bankingproject:2.0
