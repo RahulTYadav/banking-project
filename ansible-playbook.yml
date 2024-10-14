@@ -1,20 +1,20 @@
 - name: Docker configure in Ec2 Machine
-  hosts: ansiblegroup
-  become : true
+  hosts: all
+  become : devops
   connection: ssh
   tasks:
   - name: updating the New Ec2 Machine 
-    command: sudo apt update
+    command: sudo apt update -y
 
   - name: Install Docker
-    command: sudo apt-get install docker.io -y
+    command: sudo apt install docker.io -y
     become: yes
-    become_user: root
+    become_user: devops
 
   - name: Start Docker service
     command: sudo systemctl start docker
     become: yes
-    become_user: root
+    become_user: devops
 
   - name: Deploy the Image and Run as Container
-    command: docker run -itd -p 8084:8081 rahultyadav/bankingproject:2.0
+    command: docker run -itd -p 8084:8081 rahultyadav/bankingproject:2.0    
