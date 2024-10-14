@@ -5,14 +5,9 @@
   tasks:
   - name: updating the New Ec2 Machine 
     command: sudo apt update -y
-
-  - name: Install Docker
-    command: sudo apt install docker -y
-    become: yes
-    become_user: root
-
+    
   - name: Start Docker service
-    command: sudo systemctl start docker
+    command: service docker start
     become: yes
     become_user: root
 
