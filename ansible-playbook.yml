@@ -1,6 +1,6 @@
 - name: Docker configure in Ec2 Machine
   hosts: all
-  become : devops
+  become : true
   connection: ssh
   tasks:
   - name: updating the New Ec2 Machine 
